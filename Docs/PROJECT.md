@@ -1,46 +1,44 @@
 # TickeGo
 
-TickeGo is a full-stack event ticket booking platform where organizers can host events and users can buy or resell tickets securely.
+TickeGo is a campus event discovery and management platform designed for colleges.
 
-## Overview
+Many college clubs conduct events such as hackathons, workshops, stand-up shows, poetry sessions, and technical talks. However, these events are often promoted only through posters or WhatsApp groups, causing many students to remain unaware of them.
 
-TickeGo allows organizers such as colleges, performers, speakers, and event managers to create and manage events.
-
-Users can browse events, purchase tickets, and receive digital tickets with QR codes.
-
-If a user cannot attend an event, they can resell their ticket securely through the platform.
+TickeGo provides a centralized portal where clubs can publish their events and students can discover and participate in events related to their interests.
 
 ## Problem Statement
 
-Many people purchase tickets for events but sometimes cannot attend due to emergencies or schedule conflicts.
+In many colleges, multiple clubs organize events throughout the year. These events are usually promoted through scattered channels such as posters or messaging groups, which leads to poor visibility and low participation.
 
-Most ticket platforms do not provide a safe and structured way for users to resell tickets.
+Students often miss events that match their interests simply because they were not aware of them.
 
-TickeGo solves this problem by allowing secure ticket resale with ownership transfer and QR-based verification.
+TickeGo solves this problem by creating a centralized platform where clubs can promote events and students can easily discover, filter, and participate in them.
 
-## Event Categories
+## Smart Event Assistant
 
-TickeGo supports multiple types of events:
+TickeGo will include a chatbot that helps students discover events based on their interests.
 
-- Concerts
-- Stand-up Comedy
-- DJ Nights
-- College Festivals
-- TED-style Talks
-- Public Speaking Events
-- Poetry / Open Mic
-- Workshops
+Example:
+User: Show me coding events this week  
+Bot: Here are the upcoming coding competitions and hackathons.
 
-## Core Features
+## Users of the Platform
 
-- Event creation and management
-- Ticket booking system
-- QR code based ticket verification
-- Ticket resale marketplace
-- Organizer dashboard
-- Admin moderation system
-- Event search and filters
-- Event reviews and ratings
+### Students
+- Discover events
+- Filter events by interest
+- Register or buy tickets
+- Receive notifications
+- Chat with event assistant
 
+### Clubs / Organizers
+- Create and manage events
+- Upload posters
+- Track participants
+- Verify event entries
 
+### Admin
+- Approve events
+- Manage clubs
+- Monitor platform activity
 

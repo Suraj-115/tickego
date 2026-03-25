@@ -1,17 +1,13 @@
-# Database Schema – TickeGo
-
-## Users Collection
+## Clubs Collection
 
 Fields:
 
 - _id
 - name
-- email
-- password
-- role (user | organizer | admin)
-- profileImage
+- description
+- logo
+- members
 - createdEvents
-- purchasedTickets
 - createdAt
 
 ## Events Collection
@@ -27,56 +23,9 @@ Fields:
 - price
 - totalTickets
 - availableTickets
-- organizerId
+- clubId
 - poster
 - speakers
-- status (pending | approved | rejected)
+- status
 - createdAt
 
-## Tickets Collection
-
-Fields:
-
-- _id
-- eventId
-- ownerId
-- originalPrice
-- currentPrice
-- status (active | used | cancelled)
-- isResale
-- qrCode
-- purchaseDate
-
-## ResaleListings Collection
-
-Fields:
-
-- _id
-- ticketId
-- sellerId
-- price
-- status (active | sold | cancelled)
-- buyerId
-- createdAt
-
-## Speakers Collection
-
-Fields:
-
-- _id
-- name
-- bio
-- photo
-- socialLinks
-- events
-
-## Reviews Collection
-
-Fields:
-
-- _id
-- eventId
-- userId
-- rating
-- comment
-- createdAt

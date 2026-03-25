@@ -1,31 +1,9 @@
-# TickeGo Tech Stack
+## AI Assistant
 
-## Frontend
-- React
-- TailwindCSS
-- Axios
-- React Router
+Chatbot for helping students discover events.
 
-## Backend
-- Node.js
-- Express.js
+Possible technologies:
+- OpenAI API
+- Dialogflow
+- Custom rule-based chatbot
 
-## Database
-- MongoDB (MongoDB Atlas)
-
-## Authentication
-- JWT (JSON Web Token)
-
-## Image Storage
-- Cloudinary
-
-## Payments
-- Razorpay (test mode)
-
-## Real-time Updates
-- Socket.IO
-
-## Deployment
-Frontend → Vercel  
-Backend → Render  
-Database → MongoDB Atlas
