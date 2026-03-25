@@ -1,2 +1,2 @@
 # tickego
-Event ticket booking and reselling platform.
+TickeGo is a campus event discovery and management platform designed for colleges.
