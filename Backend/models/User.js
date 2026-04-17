@@ -36,12 +36,16 @@ const userSchema = new mongoose.Schema(
       latitude: Number,
       longitude: Number,
     },
+
     isVerified: {
       type: Boolean, 
       default: false,
     },
+
     otp: String,
+
     otpExpiry: Date,
+    
   },
   { timestamps: true}
 );
