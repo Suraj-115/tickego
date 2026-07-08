@@ -10,6 +10,7 @@ const orgRoutes = require("./routes/organizationRoutes");
 const deptRoutes = require("./routes/departmentRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const ticketRoutes = require("./routes/ticketRoutes");
 
 connectDB();
 
@@ -21,6 +22,7 @@ app.use("/api/org", orgRoutes);
 app.use("/api/dept", deptRoutes);
 app.use("/api/event", eventRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/ticket", ticketRoutes);
 
 app.get("/", (req, res) => {
   res.send("TickeGo API running...");
