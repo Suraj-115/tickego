@@ -6,4 +6,6 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/create", authMiddleware, orgController.createOrganization);
 
+router.get("/", orgController.getAllOrganizations);
+
 module.exports = router;

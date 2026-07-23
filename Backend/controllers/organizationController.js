@@ -23,3 +23,13 @@ exports.createOrganization = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getAllOrganizations = async (req, res) => {
+  try {
+    const organizations = await Organization.find().sort({ name: 1 });
+
+    res.json(organizations);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

@@ -52,9 +52,10 @@ exports.createOrder = async (req, res) => {
     });
 
     res.status(200).json({
-      message: "Order created successfully",
-      order,
-      ticketId: ticket._id
+        message: "Order created successfully",
+        order,
+        ticketId: ticket._id,
+        key: process.env.RAZORPAY_KEY_ID,
     });
 
   } catch (error) {

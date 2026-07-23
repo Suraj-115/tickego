@@ -21,3 +21,15 @@ exports.createDepartment = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getAllDepartments = async (req, res) => {
+  try {
+    const departments = await Department.find()
+      .populate("organization", "name")
+      .sort({ name: 1 });
+
+    res.json(departments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

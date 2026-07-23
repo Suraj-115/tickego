@@ -6,6 +6,16 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const ticketController = require("../controllers/ticketController");
 
-router.post("/scan", authMiddleware, ticketController.scanTicket);
+router.get(
+  "/my-tickets",
+  authMiddleware,
+  ticketController.getMyTickets
+);
+
+router.post(
+  "/scan",
+  authMiddleware,
+  ticketController.scanTicket
+);
 
 module.exports = router;

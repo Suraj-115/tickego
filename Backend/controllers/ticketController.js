@@ -17,7 +17,7 @@ exports.scanTicket = async(req,res) =>{
     }
 
     if(ticket.status !== "paid"){
-      return res.stats(404).json({
+      return res.status(404).json({
         message: "Payment pending"
       });
     }
@@ -56,3 +56,17 @@ exports.scanTicket = async(req,res) =>{
     });
   }
 }
+
+exports.getMyTickets = async (req, res) => {
+  try {
+    const tickets = await Ticket.find({ user: req.user.id })
+      .populate("event")
+      .sort({ createdAt: -1 });
+
+    res.json(tickets);
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+};

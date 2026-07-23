@@ -6,4 +6,6 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/create", authMiddleware, deptController.createDepartment);
 
+router.get("/", deptController.getAllDepartments);
+
 module.exports = router;
