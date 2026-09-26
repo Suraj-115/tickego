@@ -17,6 +17,10 @@ exports.createEvent = async (req, res) => {
       maxParticipants,
     } = req.body;
 
+    if (new Date(eventDate) <= new Date()) {
+      return res.status(400).json({ message: "Event date must be in the future" });
+    }
+
     const event = new Event({
       title,
       description,
@@ -57,7 +61,7 @@ exports.registerForEvent = async (req, res) => {
     }
 
     // Check if already registered
-    if (event.registeredUsers.includes(userId)) {
+    if (event.registeredUsers.some((id) => id.toString() === userId.toString())) {
       return res.status(400).json({ message: "Already registered" });
     }
 
@@ -92,12 +96,15 @@ exports.registerForEvent = async (req, res) => {
 
 exports.getAllEvents = async (req, res) => {
   try {
-    const { category, city } = req.query;
+    const { category, city, title, eventMode, isPaid } = req.query;
 
     let filter = {};
 
     if (category) filter.category = category;
     if (city) filter["location.city"] = city;
+    if (title) filter.title = { $regex: title, $options: "i" };
+    if (eventMode) filter.eventMode = eventMode;
+    if (isPaid !== undefined) filter.isPaid = isPaid === "true";
 
     const events = await Event.find(filter)
       .populate("organization", "name")
@@ -123,6 +130,33 @@ exports.getEventById = async (req, res) => {
     }
 
     res.json(event);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getMyEvents = async (req, res) => {
+  try {
+    const events = await Event.find({ createdBy: req.user.id })
+      .populate("organization", "name")
+      .populate("department", "name")
+      .populate("registeredUsers", "name email")
+      .sort({ createdAt: -1 });
+
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getRegisteredEvents = async (req, res) => {
+  try {
+    const events = await Event.find({ registeredUsers: req.user.id })
+      .populate("organization", "name")
+      .populate("department", "name")
+      .sort({ eventDate: 1 });
+
+    res.json(events);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

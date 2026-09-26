@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 function Navbar() {
-  const { token, logout } = useAuth();
+  const { token, user, logout } = useAuth();
 
   return (
     <nav className="bg-blue-600 text-white">
@@ -23,13 +23,17 @@ function Navbar() {
 
           {token && (
             <>
-              <Link to="/my-tickets">
-                My Tickets
-              </Link>
-
-              <Link to="/organizer/create-event">
-                Create Event
-              </Link>
+              {user?.role === "organizationAdmin" || user?.role === "departmentHead" || user?.role === "admin" ? (
+                <>
+                  <Link to="/organizer/dashboard">Dashboard</Link>
+                  <Link to="/organizer/create-event">Create Event</Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/dashboard">Dashboard</Link>
+                  <Link to="/my-tickets">My Tickets</Link>
+                </>
+              )}
 
               <button onClick={logout}>
                 Logout

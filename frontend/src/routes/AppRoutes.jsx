@@ -16,6 +16,9 @@ import CreateEvent from "../pages/organizer/CreateEvent";
 
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 
+import Scanner from "../pages/organizer/Scanner";
+import OrganizerDashboard from "../pages/organizer/Dashboard";
+
 function AppRoutes() {
   return (
     <Routes>
@@ -50,6 +53,24 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <CreateEvent />
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/organizer/dashboard"
+        element={
+          <ProtectedRoute>
+            <OrganizerDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/organizer/scanner"
+        element={
+          <ProtectedRoute>
+            <Scanner />
           </ProtectedRoute>
         }
       />

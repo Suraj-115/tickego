@@ -8,7 +8,7 @@ exports.scanTicket = async(req,res) =>{
       ticketNumber,
     })
     .populate("user", "name email")
-    .populate("event", "title");
+    .populate("event", "title createdBy");
 
     if(!ticket){
       return res.status(404).json({
@@ -16,8 +16,14 @@ exports.scanTicket = async(req,res) =>{
       });
     }
 
+    if(ticket.event.createdBy.toString() !== req.user.id && req.user.role !== "admin"){
+      return res.status(403).json({
+        message: "Unauthorized to scan tickets for this event"
+      });
+    }
+
     if(ticket.status !== "paid"){
-      return res.status(404).json({
+      return res.status(400).json({
         message: "Payment pending"
       });
     }

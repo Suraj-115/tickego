@@ -86,14 +86,18 @@ exports.verifyPayment = async (req, res) => {
       .update(body.toString())
       .digest("hex");
 
-    // if (expectedSignature !== razorpay_signature) {
-    //   return res.status(400).json({ message: "Invalid payment signature" });
-    // }
+    if (expectedSignature !== razorpay_signature) {
+      return res.status(400).json({ message: "Invalid payment signature" });
+    }
 
     const ticket = await Ticket.findById(ticketId);
 
     if (!ticket) {
       return res.status(404).json({ message: "Ticket not found" });
+    }
+
+    if (ticket.orderId !== razorpay_order_id) {
+      return res.status(400).json({ message: "Order ID mismatch" });
     }
 
     ticket.paymentId = razorpay_payment_id;

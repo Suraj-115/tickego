@@ -48,6 +48,12 @@ exports.signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    // College Email Validation
+    const collegeDomain = process.env.COLLEGE_EMAIL_DOMAIN;
+    if (collegeDomain && !email.endsWith(`@${collegeDomain}`)) {
+      return res.status(403).json({ message: `Registration is restricted to ${collegeDomain} emails only.` });
+    }
+
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -104,6 +110,7 @@ exports.login = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {
