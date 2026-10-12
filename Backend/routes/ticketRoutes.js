@@ -1,21 +1,18 @@
-const express = require("express");
-
+const express = require('express');
 const router = express.Router();
+const { 
+  bookFreeTicket, 
+  createOrder, 
+  verifyPayment, 
+  getMyTickets, 
+  scanTicket 
+} = require('../controllers/ticketController');
+const { protect, club } = require('../middleware/authMiddleware');
 
-const authMiddleware = require("../middleware/authMiddleware");
-
-const ticketController = require("../controllers/ticketController");
-
-router.get(
-  "/my-tickets",
-  authMiddleware,
-  ticketController.getMyTickets
-);
-
-router.post(
-  "/scan",
-  authMiddleware,
-  ticketController.scanTicket
-);
+router.get('/my-tickets', protect, getMyTickets);
+router.post('/book-free', protect, bookFreeTicket);
+router.post('/create-order', protect, createOrder);
+router.post('/verify-payment', protect, verifyPayment);
+router.post('/scan', protect, club, scanTicket);
 
 module.exports = router;

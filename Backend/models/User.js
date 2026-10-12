@@ -1,53 +1,18 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type:String,
-      required: true,
-      unique: true,
-    },
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ['admin', 'club', 'student'], default: 'student' },
+  clubName: { type: String }, 
+  clubLogo: { type: String },
+  clubDescription: { type: String },
+  clubType: { type: String },
+  clubMotto: { type: String },
+  motto: { type: String },
+  resetPasswordOtp: { type: String },
+  resetPasswordExpires: { type: Date },
+}, { timestamps: true });
 
-    password: {
-      type: String,
-      required: true,
-    },
-
-    role: {
-      type: String,
-      enum: ['user', 'organizationAdmin', "departmentHead"],
-      default: 'user',
-    },
-
-    organization: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Organization",
-    },
-
-    interests: [{type: String}],
-
-    location:{
-      country: String,
-      city: String,
-      latitude: Number,
-      longitude: Number,
-    },
-
-    isVerified: {
-      type: Boolean, 
-      default: false,
-    },
-
-    otp: String,
-
-    otpExpiry: Date,
-    
-  },
-  { timestamps: true}
-);
-
-module.exports = mongoose.model("User",userSchema);
+module.exports = mongoose.model('User', userSchema);

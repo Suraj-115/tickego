@@ -1,49 +1,13 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const ticketSchema = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+const ticketSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  eventId: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true },
+  paymentStatus: { type: String, enum: ['pending', 'completed', 'free'], required: true },
+  razorpayOrderId: { type: String },
+  razorpayPaymentId: { type: String },
+  attendanceStatus: { type: Boolean, default: false }, // marked true when QR is scanned by club
+  ticketId: { type: String, required: true, unique: true }, // The unique payload encoded in QR
+}, { timestamps: true });
 
-    event: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Event",
-    },
-
-    paymentId: String,
-    orderId: String,
-
-    status: {
-      type: String,
-      enum: ["pending", "paid", "failed"],
-      default: "pending",
-    },
-    qrCode: {
-      type: String,
-    },
-
-    isUsed: {
-      type: Boolean,
-      default: false,
-    },
-
-    usedAt: {
-      type: Date,
-    },
-    ticketNumber: {
-      type: String,
-      unique: true,
-      required: true
-    },
-    checkedInBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  },
-  { timestamps: true }
-);
-
-module.exports = mongoose.model("Ticket", ticketSchema);
-
+module.exports = mongoose.model('Ticket', ticketSchema);

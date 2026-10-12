@@ -1,31 +1,45 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-const authMiddleware = (req, res, next) => {
-  try {
-    // Get token from header
-    const authHeader = req.headers.authorization;
+const protect = async (req, res, next) => {
+  let token;
 
-    if (!authHeader) {
-      return res.status(401).json({ message: "No token provided" });
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret123');
+      req.user = await User.findById(decoded.id).select('-password');
+
+      if (!req.user) {
+        return res.status(401).json({ message: 'User not found' });
+      }
+
+      return next();
+    } catch (error) {
+      return res.status(401).json({ message: 'Not authorized, token failed' });
     }
+  }
 
-    // Format: Bearer TOKEN
-    const token = authHeader.split(" ")[1];
+  return res.status(401).json({ message: 'Not authorized, no token' });
+};
 
-    if (!token) {
-      return res.status(401).json({ message: "Invalid token format" });
-    }
-
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Attach user info to request
-    req.user = decoded;
-
-    next(); // move to next step (controller)
-  } catch (error) {
-    return res.status(401).json({ message: "Invalid token" });
+const admin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    res.status(401).json({ message: 'Not authorized as an admin' });
   }
 };
 
-module.exports = authMiddleware;
+const club = (req, res, next) => {
+  if (req.user && (req.user.role === 'club' || req.user.role === 'admin')) {
+    next();
+  } else {
+    res.status(401).json({ message: 'Not authorized as a club' });
+  }
+};
+
+module.exports = { protect, admin, club };
